@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",    // 编译目标平台
-    "module": "ES2020", // 组织代码的方式
+    "module": "CommonJs", // 组织代码的方式
     "outDir": ".",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,  // 让TypeScript支持为带有装饰器的声明生成元数据
@@ -24,10 +24,10 @@
       "dynamic-builder": ["./university/dynamic-builder"],
       "@fm/server": ["./university/server"],
       "@fm/server/*": ["./university/server/*"],
-      "@fm/client-silde-rendering": ["./university/client-silde-rendering"],
-      "@fm/client-silde-rendering/*": ["./university/client-silde-rendering/*"],
-      "@fm/server-slide-rendering": ["./university/server-slide-rendering"],
-      "@fm/server-slide-rendering/*": ["./university/server-slide-rendering/*"]
+      "@fm/client-side-rendering": ["./university/client-silde-rendering"],
+      "@fm/client-side-rendering/*": ["./university/client-silde-rendering/*"],
+      "@fm/server-side-rendering": ["./university/server-slide-rendering"],
+      "@fm/server-side-rendering/*": ["./university/server-slide-rendering/*"]
     },          
     "typeRoots": [
       "node_modules/@types",
