@@ -3,6 +3,7 @@
     "target": "ESNext",    // 编译目标平台
     "module": "CommonJs", // 组织代码的方式
     "outDir": ".",
+    // "outDir": "../api/node_modules/@fm",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,  // 让TypeScript支持为带有装饰器的声明生成元数据
     "experimentalDecorators": true, // 是否启用实验性装饰器特性
@@ -17,6 +18,7 @@
     "declaration": true,
     "baseUrl": "./",
     "paths": {
+      "@fm/import-rxjs": ["./university/import-rxjs"],
       "@fm/di": ["./university/di"],
       "@framework/*": ["./framework/*"],
       "@fm/shared": ["./university/shared"],
@@ -24,10 +26,10 @@
       "dynamic-builder": ["./university/dynamic-builder"],
       "@fm/server": ["./university/server"],
       "@fm/server/*": ["./university/server/*"],
-      "@fm/client-side-rendering": ["./university/client-silde-rendering"],
-      "@fm/client-side-rendering/*": ["./university/client-silde-rendering/*"],
-      "@fm/server-side-rendering": ["./university/server-slide-rendering"],
-      "@fm/server-side-rendering/*": ["./university/server-slide-rendering/*"]
+      "@fm/csr": ["./university/csr"],
+      "@fm/csr/*": ["./university/csr/*"],
+      "@fm/ssr": ["./university/ssr"],
+      "@fm/ssr/*": ["./university/ssr/*"]
     },          
     "typeRoots": [
       "node_modules/@types",
@@ -43,9 +45,10 @@
   "exclude": [
     "di",
     "shared",
-    "dynamic-builder",
+    "csr",
+    "ssr",
     "server",
-    "client-silde-rendering",
-    "server-silde-rendering"
+    "dynamic-builder",
+    "university/dynamic-builder"
   ]
 }
