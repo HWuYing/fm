@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",    // 编译目标平台
     "module": "CommonJs", // 组织代码的方式
+    "rootDir": "./university",
     "outDir": ".",
     // "outDir": "../api/node_modules/@fm",
     "moduleResolution": "node",
@@ -18,19 +19,8 @@
     "declaration": true,
     "baseUrl": "./",
     "paths": {
-      "@fm/import-rxjs": ["./university/import-rxjs"],
-      "@fm/di": ["./university/di"],
-      "@framework/*": ["./framework/*"],
-      "@fm/shared": ["./university/shared"],
-      "@fm/shared/*": ["./university/shared/*"],
-      "dynamic-builder": ["./university/dynamic-builder"],
-      "@fm/server": ["./university/server"],
-      "@fm/server/*": ["./university/server/*"],
-      "@fm/csr": ["./university/csr"],
-      "@fm/csr/*": ["./university/csr/*"],
-      "@fm/ssr": ["./university/ssr"],
-      "@fm/ssr/*": ["./university/ssr/*"]
-    },          
+      "@fm/*": ["./university/*"]
+    },
     "typeRoots": [
       "node_modules/@types",
       "./typings/**/*"
@@ -42,13 +32,5 @@
     "./university/**/*",
     "./typings/**/*"
   ],
-  "exclude": [
-    "di",
-    "shared",
-    "csr",
-    "ssr",
-    "server",
-    "dynamic-builder",
-    "university/dynamic-builder"
-  ]
+  "exclude": []
 }
