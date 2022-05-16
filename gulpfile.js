@@ -7,7 +7,7 @@ function g(packageName, moduleItem, stripInternal) {
     const project = ts.createProject('tsconfig.json', { module });
     let source = gulp.src([`university/${packageName}/**/*`, 'typings/**/*']).pipe(project());
     source = stripInternal ? source.dts : source.js;
-    return source.pipe(gulp.dest(`../api/node_modules/@fm/${packageName}/${outDir}`));
+    return source.pipe(gulp.dest(`./${packageName}/${outDir}`));
   }
 }
 
