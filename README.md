@@ -1,5 +1,4 @@
 # fm
-git submodule add git@github.com:hwyn/import-rxjs.git
 git submodule add git@github.com:hwyn/di.git
 git submodule add git@github.com:hwyn/shared.git
 git submodule add git@github.com:hwyn/csr.git
