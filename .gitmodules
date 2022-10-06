@@ -1,0 +1,21 @@
+[submodule "di"]
+	path = di
+	url = git@github.com:hwyn/di.git
+[submodule "shared"]
+	path = shared
+	url = git@github.com:hwyn/shared.git
+[submodule "csr"]
+	path = csr
+	url = git@github.com:hwyn/csr.git
+[submodule "ssr"]
+	path = ssr
+	url = git@github.com:hwyn/ssr.git
+[submodule "server"]
+	path = server
+	url = git@github.com:hwyn/server.git
+[submodule "dynamic-builder"]
+	path = dynamic-builder
+	url = git@github.com:hwyn/dynamic-builder.git
+[submodule "university"]
+	path = university
+	url = git@github.com:hwyn/university.git
