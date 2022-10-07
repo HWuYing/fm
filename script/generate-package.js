@@ -6,9 +6,10 @@ function readExportsPath(packagePath, root = '') {
   const exportArray = [];
   const currentRoot = path.join(packagePath, root);
   const files = fs.readdirSync(currentRoot);
-  if (files.includes('index.js')) {
-    exportArray.push(root);
-  }
+  const hasIndex = files.includes('index.js');
+
+  exportArray.push(hasIndex ? [root, `${root}/index.js`] : [`${root}/*`, `${root}/*.js`]);
+
   files.forEach((fileName) => {
     const filePath = path.join(currentRoot, fileName);
     if (fs.statSync(filePath).isDirectory()) {
@@ -19,13 +20,13 @@ function readExportsPath(packagePath, root = '') {
 }
 
 function generateExports(pathList, exports = {}) {
-  pathList.forEach((path) => {
-    const exportModel = path.replace(/[\\|\/]+/, '/');
-    const expportKey = path ? './' + exportModel : '.';
+  pathList.forEach(([path, exportPath]) => {
+    const expportKey = path ? './' + path : '.';
+    const mappingKeys = Object.keys(exportMapping);
 
-    exports[expportKey] = Object.keys(exportMapping).reduce((obj, key) => ({
+    exports[expportKey.replace(/[\\|\/]+/g, '/')] = mappingKeys.reduce((obj, key) => ({
       ...obj,
-      [key]: `./${exportMapping[key]}/${exportModel}/index.js`.replace(/[\/]+/ig, '/')
+      [key]: `./${exportMapping[key]}/${exportPath}`.replace(/[\\|\/]+/g, '/')
     }), {});
   });
 
@@ -50,8 +51,7 @@ function generatePackageTemplate(name, version, exports) {
   };
 }
 
-exports.generatePackage = function generatePackage(name, packageName, options = {}) {
-  const packageRoot = path.join(__dirname, '../', packageName);
+exports.generatePackage = function generatePackage(name, packageRoot, options = {}) {
   return () => {
     const exports = options.ignore ? {} : generateExports(readExportsPath(path.join(packageRoot, 'cjs')));
     const packageJson = generatePackageTemplate(name, '1.0.0', exports);
