@@ -34,5 +34,8 @@
   "bugs": {
     "url": "https://github.com/HWuYing/fm/issues"
   },
-  "homepage": "https://github.com/HWuYing/fm#readme"
+  "homepage": "https://github.com/HWuYing/fm#readme",
+  "dependencies": {
+    "rimraf": "^3.0.2"
+  }
 }

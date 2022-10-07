@@ -6,8 +6,8 @@ const rimraf = require('rimraf');
 const { generatePackage } = require('./generate-package');
 const { moduleMapping, targetMapping } = require('./constant');
 
-// const rootOutDir = path.join(__dirname, '../');
-const rootOutDir = path.join(__dirname, '../../api/node_modules/@fm/');
+const rootOutDir = path.join(__dirname, '../');
+// const rootOutDir = path.join(__dirname, '../../api/node_modules/@fm/');
 
 function clearPackage(packageRoot) {
   const ignore = ['.git'];
