@@ -34,7 +34,7 @@ function generateExports(pathList, exports = {}) {
 }
 
 function generatePackageTemplate(name, version, exports) {
-  return {
+  const packageJson = {
     name,
     version,
     description: '',
@@ -49,6 +49,10 @@ function generatePackageTemplate(name, version, exports) {
     author: '',
     license: 'ISC'
   };
+  if (!Object.keys(exports).length) {
+    delete packageJson.exports;
+  }
+  return packageJson;
 }
 
 exports.generatePackage = function generatePackage(name, packageRoot, options = {}) {
