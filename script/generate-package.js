@@ -6,9 +6,14 @@ function readExportsPath(packagePath, root = '') {
   const exportArray = [];
   const currentRoot = path.join(packagePath, root);
   const files = fs.readdirSync(currentRoot);
-  const hasIndex = files.includes('index.js');
 
-  exportArray.push(hasIndex ? [root, `${root}/index.js`] : [`${root}/*`, `${root}/*.js`]);
+  if (files.includes('index.js')) {
+    exportArray.push([root, `${root}/index.js`]);
+  }
+
+  if (root) {
+    exportArray.push([`${root}/*`, `${root}/*.js`]);
+  }
 
   files.forEach((fileName) => {
     const filePath = path.join(currentRoot, fileName);
@@ -59,6 +64,10 @@ exports.generatePackage = function generatePackage(name, packageRoot, options = 
   return () => {
     const exports = options.ignore ? {} : generateExports(readExportsPath(path.join(packageRoot, 'cjs')));
     const packageJson = generatePackageTemplate(name, '1.0.0', exports);
+    if (!options.ignore) {
+      packageJson.sideEffects = false;
+    }
+
     fs.writeFileSync(path.join(packageRoot, 'package.json'), JSON.stringify(packageJson, null, '\t'), { encoding: 'utf8' })
     return Promise.resolve(exports);
   };
