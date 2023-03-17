@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const { exportMapping } = require('./constant');
+
+const exportMapping = { node: 'cjs', require: 'cjs', es2015: 'esm', default: 'esm5' };
 
 function readExportsPath(packagePath, root = '') {
   const exportArray = [];
@@ -67,7 +68,6 @@ exports.generatePackage = function generatePackage(name, packageRoot, options = 
     if (!options.ignore) {
       packageJson.sideEffects = false;
     }
-
     fs.writeFileSync(path.join(packageRoot, 'package.json'), JSON.stringify(packageJson, null, '\t'), { encoding: 'utf8' })
     return Promise.resolve(exports);
   };
