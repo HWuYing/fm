@@ -15,7 +15,7 @@ const packagesConfig = {
   ssr: { src: `university/ssr`, buildName: '@fm/ssr' },
   core: { src: `university/core`, buildName: '@fm/core' },
   server: { src: `university/server`, buildName: '@fm/server' },
-  'dynamic-builder': { src: `university/dynamic-builder`, buildName: 'dynamic-builder', exportIgnore: true },
+  'dynamic-builder': { src: `university/dynamic-builder`, buildName: 'dynamic-builder', exportIgnore: true }
 };
 
 const tasks = [];
