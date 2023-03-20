@@ -7,13 +7,13 @@ const packages = ['di', 'shared', 'csr', 'ssr', 'server'];
 // const packages = ['dynamic-builder'];
 
 const rootOutDir = path.join(__dirname, './');
-// const rootOutDir = path.join(__dirname, '../../api/node_modules/@fm/');
+// const rootOutDir = path.join(__dirname, '../api/node_modules/@fm/');
 
 const packagesConfig = {
   di: { src: `university/di`, buildName: '@fm/di' },
   csr: { src: `university/csr`, buildName: '@fm/csr' },
   ssr: { src: `university/ssr`, buildName: '@fm/ssr' },
-  shared: { src: `university/shared`, buildName: '@fm/shared' },
+  core: { src: `university/core`, buildName: '@fm/core' },
   server: { src: `university/server`, buildName: '@fm/server' },
   'dynamic-builder': { src: `university/dynamic-builder`, buildName: 'dynamic-builder', exportIgnore: true },
 };

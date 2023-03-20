@@ -1,9 +1,9 @@
 [submodule "di"]
 	path = di
 	url = git@github.com:hwyn/di.git
-[submodule "shared"]
-	path = shared
-	url = git@github.com:hwyn/shared.git
+[submodule "core"]
+	path = core
+	url = git@github.com:hwyn/core.git
 [submodule "csr"]
 	path = csr
 	url = git@github.com:hwyn/csr.git
