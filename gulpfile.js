@@ -2,12 +2,8 @@ const path = require('path');
 const gulp = require('gulp');
 const { buildPackage } = require('./script/build-source');
 
-// const packages = ['di', 'shared', 'dynamic-builder', 'csr', 'ssr', 'server'];
-const packages = ['di', 'shared', 'csr', 'ssr', 'server'];
-// const packages = ['dynamic-builder'];
-
 const rootOutDir = path.join(__dirname, './');
-// const rootOutDir = path.join(__dirname, '../api/node_modules/@fm/');
+// const rootOutDir = path.join(__dirname, '../api/node_modules/');
 
 const packagesConfig = {
   di: { src: `university/di`, buildName: '@fm/di' },
