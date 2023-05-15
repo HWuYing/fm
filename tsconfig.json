@@ -19,7 +19,8 @@
     "declaration": true,
     "baseUrl": "./",
     "paths": {
-      "@fm/*": ["./university/*"]
+      "@fm/*": ["./university/*"],
+      "@dynamic/builder": ["./university/dynamic-builder"]
     },
     "typeRoots": [
       "node_modules/@types",

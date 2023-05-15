@@ -7,11 +7,12 @@ const rootOutDir = path.join(__dirname, './');
 
 const packagesConfig = {
   di: { src: `university/di`, buildName: '@fm/di' },
+  core: { src: `university/core`, buildName: '@fm/core' },
   csr: { src: `university/csr`, buildName: '@fm/csr' },
   ssr: { src: `university/ssr`, buildName: '@fm/ssr' },
-  core: { src: `university/core`, buildName: '@fm/core' },
   server: { src: `university/server`, buildName: '@fm/server' },
-  'dynamic-builder': { src: `university/dynamic-builder`, buildName: 'dynamic-builder', exportIgnore: true }
+  'dynamic-builder': { src: `university/dynamic-builder`, buildName: '@dynamic/builder', exportIgnore: true },
+  'dynamic-plugin': { src: `university/dynamic-plugin`, buildName: '@dynamic/plugin', exportIgnore: true }
 };
 
 const tasks = [];

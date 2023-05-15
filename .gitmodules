@@ -16,6 +16,9 @@
 [submodule "dynamic-builder"]
 	path = dynamic-builder
 	url = git@github.com:hwyn/dynamic-builder.git
+[submodule "dynamic-plugin"]
+	path = dynamic-plugin
+	url = git@github.com:hwyn/dynamic-plugin.git
 [submodule "university"]
 	path = university
 	url = git@github.com:hwyn/university.git
