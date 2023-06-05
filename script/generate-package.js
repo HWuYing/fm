@@ -17,8 +17,7 @@ function readExportsPath(packagePath, root = '') {
   }
 
   files.forEach((fileName) => {
-    const filePath = path.join(currentRoot, fileName);
-    if (fs.statSync(filePath).isDirectory()) {
+    if (fs.statSync(path.join(currentRoot, fileName)).isDirectory()) {
       exportArray.push(...readExportsPath(packagePath, path.join(root, fileName)));
     }
   });
@@ -27,10 +26,10 @@ function readExportsPath(packagePath, root = '') {
 
 function generateExports(pathList, exports = {}) {
   pathList.forEach(([path, exportPath]) => {
-    const expportKey = path ? './' + path : '.';
+    const exportKey = path ? './' + path : '.';
     const mappingKeys = Object.keys(exportMapping);
 
-    exports[expportKey.replace(/[\\|\/]+/g, '/')] = mappingKeys.reduce((obj, key) => ({
+    exports[exportKey.replace(/[\\|\/]+/g, '/')] = mappingKeys.reduce((obj, key) => ({
       ...obj,
       [key]: `./${exportMapping[key]}/${exportPath}`.replace(/[\\|\/]+/g, '/')
     }), {});
@@ -39,8 +38,8 @@ function generateExports(pathList, exports = {}) {
   return exports;
 }
 
-function generatePackageTemplate(name, version, exports) {
-  const packageJson = {
+function generatePackageTemplate(name, version, exports, dependencies = {}) {
+  return {
     name,
     version,
     description: '',
@@ -48,26 +47,21 @@ function generatePackageTemplate(name, version, exports) {
     module: './esm5/index.js',
     es2015: './esm/index.js',
     exports,
-    dependencies: {},
+    dependencies,
     scripts: {
       test: 'echo \'Error: no test specified\' && exit 1'
     },
     author: '',
     license: 'ISC'
   };
-  if (!Object.keys(exports).length) {
-    delete packageJson.exports;
-  }
-  return packageJson;
 }
 
-exports.generatePackage = function generatePackage(name, packageRoot, options = {}) {
+exports.generatePackage = function generatePackage(packageRoot, { buildName: name, dependencies, sideEffects = false } = {}) {
   return () => {
-    const exports = options.ignore ? {} : generateExports(readExportsPath(path.join(packageRoot, 'cjs')));
-    const packageJson = generatePackageTemplate(name, '1.0.0', exports);
-    if (!options.ignore) {
-      packageJson.sideEffects = false;
-    }
+    const exports = sideEffects ? {} : generateExports(readExportsPath(path.join(packageRoot, 'cjs')));
+    const packageJson = generatePackageTemplate(name, '1.0.0', exports, dependencies);
+    if (!sideEffects) packageJson.sideEffects = false;
+    if (!Object.keys(exports).length) delete packageJson.exports;
     fs.writeFileSync(path.join(packageRoot, 'package.json'), JSON.stringify(packageJson, null, '\t'), { encoding: 'utf8' })
     return Promise.resolve(exports);
   };

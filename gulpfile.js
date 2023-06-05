@@ -2,17 +2,14 @@ const path = require('path');
 const gulp = require('gulp');
 const { buildPackage } = require('./script/build-source');
 
-const rootOutDir = path.join(__dirname, './');
-// const rootOutDir = path.join(__dirname, '../api/node_modules/');
-// const rootOutDir = path.join(__dirname, '../excelToConfig/node_modules/@fm/');
 const packagesConfig = {
-  di: { src: `university/di`, buildName: '@fm/di' },
+  di: { src: `university/di`, buildName: '@fm/di', dependencies: { 'reflect-metadata': '^0.1.13' } },
   core: { src: `university/core`, buildName: '@fm/core' },
   csr: { src: `university/csr`, buildName: '@fm/csr' },
   ssr: { src: `university/ssr`, buildName: '@fm/ssr' },
   server: { src: `university/server`, buildName: '@fm/server' },
-  'dynamic-builder': { src: `university/dynamic-builder`, buildName: '@dynamic/builder', exportIgnore: true },
-  'dynamic-plugin': { src: `university/dynamic-plugin`, buildName: '@dynamic/plugin', exportIgnore: true }
+  'dynamic-builder': { src: `university/dynamic-builder`, buildName: '@dynamic/builder', sideEffects: true },
+  'dynamic-plugin': { src: `university/dynamic-plugin`, buildName: '@dynamic/plugin', sideEffects: true }
 };
 
 const tasks = [];
@@ -24,17 +21,17 @@ function pushTask(_rootOutDir, _packagesConfig) {
 }
 
 // pushTask(path.join(__dirname, '../api/node_modules/@fm/'), {
-//   di: { src: `university/di`, buildName: '@fm/di' },
-//   core: { src: `university/core`, buildName: '@fm/core' },
-  // csr: { src: `university/csr`, buildName: '@fm/csr' },
-//   ssr: { src: `university/ssr`, buildName: '@fm/ssr' },
-//   server: { src: `university/server`, buildName: '@fm/server' }
+//   di: packagesConfig.di,
+//   core: packagesConfig.core,
+//   csr: packagesConfig.csr,
+//   ssr: packagesConfig.ssr,
+//   server: packagesConfig.server
 // });
 
 // pushTask(path.join(__dirname, '../api/node_modules/@dynamic'), {
-//   builder: { src: `university/dynamic-builder`, buildName: '@dynamic/builder', exportIgnore: true },
-//   plugin: { src: `university/dynamic-plugin`, buildName: '@dynamic/plugin', exportIgnore: true }
+//   builder: packagesConfig['dynamic-builder'],
+//   plugin: packagesConfig['dynamic-plugin']
 // });
 
-pushTask(rootOutDir, packagesConfig);
+pushTask(path.join(__dirname, './'), packagesConfig);
 gulp.task('default', gulp.series(tasks));

@@ -28,31 +28,29 @@ function clearPackage(packageRoot) {
 exports.buildPackage = function buildPackage(rootOutDir, packagesConfig) {
   const tasks = [];
   const packages = Object.keys(packagesConfig);
-  function buildTask(packageName, moduleItem, stripInternal) {
-    const [module, outDir, target = 'ESNext'] = moduleItem;
+  function buildTask([module, src, outDir, target = 'ESNext'], stripInternal) {
     return () => {
       const project = ts.createProject('tsconfig.json', { module, target });
-      const sourceSrc = [`${packagesConfig[packageName].src}/**/*`, 'typings/**/*'];
-      let source = gulp.src(sourceSrc).pipe(project());
+      let source = gulp.src([`${src}/**/*`]).pipe(project());
       source = stripInternal ? source.dts : source.js;
-      return source.pipe(gulp.dest(`${rootOutDir}/${packageName}/${outDir}`));
+      return source.pipe(gulp.dest(outDir));
     }
   }
 
   packages.forEach(packageName => {
-    const moduleKeys = Object.keys(builderMapping);
     const packageRoot = path.join(rootOutDir, packageName);
-    const { buildName, exportIgnore } = packagesConfig[packageName];
+    const packageConfig = packagesConfig[packageName];
+    const { src } = packageConfig;
 
     tasks.push([`${packageName}-clear`, () => clearPackage(packageRoot)]);
-    tasks.push([packageName, buildTask(packageName, [moduleKeys[0], ''], true)]);
+    tasks.push([packageName, buildTask(['ESNext', src, packageRoot], true)]);
 
-    moduleKeys.forEach((moduleKey) => {
-      const moduleItem = [moduleKey, builderMapping[moduleKey].outDir, builderMapping[moduleKey].target];
-      tasks.push([`${packageName}-${moduleKey}`, buildTask(packageName, moduleItem)]);
+    Object.keys(builderMapping).forEach((moduleKey) => {
+      const { outDir, target } = builderMapping[moduleKey];
+      tasks.push([`${packageName}-${moduleKey}`, buildTask([moduleKey, src, `${packageRoot}/${outDir}`, target])]);
     });
 
-    tasks.push([`package-${packageName}`, generatePackage(buildName, packageRoot, { ignore: exportIgnore })]);
+    tasks.push([`${packageName}-package`, generatePackage(packageRoot, packageConfig)]);
   });
 
   return tasks;
