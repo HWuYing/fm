@@ -3,7 +3,7 @@ const gulp = require('gulp');
 const { buildPackage } = require('./script/build-source');
 
 const packagesConfig = {
-  di: { src: `university/di`, buildName: '@fm/di', dependencies: { 'reflect-metadata': '^0.1.13' } },
+  di: { src: `university/di`, buildName: '@fm/di', dependencies: { 'reflect-metadata': '^0.2.1' } },
   core: { src: `university/core`, buildName: '@fm/core' },
   csr: { src: `university/csr`, buildName: '@fm/csr' },
   ssr: { src: `university/ssr`, buildName: '@fm/ssr' },
