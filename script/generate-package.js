@@ -59,7 +59,7 @@ function generatePackageTemplate(name, version, exports, dependencies = {}) {
 exports.generatePackage = function generatePackage(packageRoot, { buildName: name, dependencies, sideEffects = false } = {}) {
   return () => {
     const exports = sideEffects ? {} : generateExports(readExportsPath(path.join(packageRoot, 'cjs')));
-    const packageJson = generatePackageTemplate(name, '1.0.0', exports, dependencies);
+    const packageJson = generatePackageTemplate(name, '0.0.1', exports, dependencies);
     if (!sideEffects) packageJson.sideEffects = ['*.effects.js'];
     if (!Object.keys(exports).length) delete packageJson.exports;
     fs.writeFileSync(path.join(packageRoot, 'package.json'), JSON.stringify(packageJson, null, '\t'), { encoding: 'utf8' })
