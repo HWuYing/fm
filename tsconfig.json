@@ -4,7 +4,6 @@
     "module": "CommonJs", // 组织代码的方式
     "rootDir": "./university",
     "outDir": ".",
-    // "outDir": "../api/node_modules/@fm",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,  // 让TypeScript支持为带有装饰器的声明生成元数据
     "experimentalDecorators": true, // 是否启用实验性装饰器特性
@@ -19,7 +18,8 @@
     "baseUrl": "./",
     "paths": {
       "@fm/*": ["./university/*"],
-      "@dynamic/builder": ["./university/dynamic-builder"]
+      "@dynamic/builder": ["./university/dynamic-builder"],
+      "@dynamic/plugin": ["./university/dynamic-plugin"]
     },
     "typeRoots": [
       "node_modules/@types",
