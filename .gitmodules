@@ -22,3 +22,9 @@
 [submodule "university"]
 	path = university
 	url = git@github.com:hwyn/university.git
+[submodule "ts-tools"]
+	path = ts-tools
+	url = git@github.com:hwyn/ts-tools.git
+[submodule "tools"]
+	path = ts-tools/tools
+	url = git@github.com:hwyn/tools.git

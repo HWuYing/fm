@@ -2,16 +2,17 @@ const path = require('path');
 const gulp = require('gulp');
 const { buildPackage } = require('./script/build-source');
 
-const namespace = '@fm/';
+const namespace = '@hwy-fm/';
 const version = '0.0.1';
 const packagesConfig = {
-  di: { src: `university/di`, buildName: '@fm/di', version, dependencies: { 'reflect-metadata': '^0.2.1' } },
-  core: { src: `university/core`, buildName: '@fm/core', version },
-  csr: { src: `university/csr`, buildName: '@fm/csr', version },
-  ssr: { src: `university/ssr`, buildName: '@fm/ssr', version },
-  server: { src: `university/server`, buildName: '@fm/server', version },
-  'dynamic-builder': { src: `university/dynamic-builder`, buildName: '@dynamic/builder', version, sideEffects: true },
-  'dynamic-plugin': { src: `university/dynamic-plugin`, buildName: '@dynamic/plugin', version, sideEffects: true }
+  di: { src: `university/di`, buildName: `${namespace}di`, version, dependencies: { 'reflect-metadata': '^0.2.1' } },
+  core: { src: `university/core`, buildName: `${namespace}core`, version },
+  csr: { src: `university/csr`, buildName: `${namespace}csr`, version },
+  ssr: { src: `university/ssr`, buildName: `${namespace}ssr`, version },
+  server: { src: `university/server`, buildName: `${namespace}server`, version },
+  'dynamic-builder': { src: `university/dynamic-builder`, buildName: `${namespace}builder`, version, sideEffects: true },
+  'dynamic-plugin': { src: `university/dynamic-plugin`, buildName: `${namespace}plugin`, version, sideEffects: true },
+  "ts-tools/dist": { src: `ts-tools/tools`, buildName: `${namespace}ts-tools`, version, packageJson: false, sideEffects: true }
 };
 
 const tasks = [];
@@ -22,7 +23,7 @@ function pushTask(_rootOutDir, _packagesConfig) {
   });
 }
 
-// pushTask(path.join(__dirname, '../api/node_modules/@fm/'), {
+// pushTask(path.join(__dirname, '../api/node_modules/@hwy-fm/'), {
 //   di: packagesConfig.di,
 //   core: packagesConfig.core,
 //   csr: packagesConfig.csr,
@@ -30,9 +31,13 @@ function pushTask(_rootOutDir, _packagesConfig) {
 //   server: packagesConfig.server
 // });
 
-// pushTask(path.join(__dirname, '../api/node_modules/@dynamic'), {
+// pushTask(path.join(__dirname, '../api/node_modules/@hwy-fm/'), {
 //   builder: packagesConfig['dynamic-builder'],
 //   plugin: packagesConfig['dynamic-plugin']
+// });
+
+// pushTask(path.join(__dirname, '../api/node_modules/@hwy-fm/'), {
+//   'ts-tools/dist': packagesConfig['ts-tools/dist']
 // });
 
 pushTask(path.join(__dirname, './'), packagesConfig);

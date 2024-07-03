@@ -12,12 +12,12 @@ const builderMapping = {
   CommonJs: { outDir: 'cjs', target: 'es5' }
 };
 
-function clearPackage(packageRoot) {
-  const ignore = ['.git'];
+function clearPackage(packageRoot, packageConfig) {
+  const { clearDir = [], ignore = ['.git'] } = packageConfig;
   if (!fs.existsSync(packageRoot)) {
     return Promise.resolve();
   }
-  const dirList = fs.readdirSync(packageRoot).filter((dir) => !ignore.includes(dir));
+  const dirList = fs.readdirSync(packageRoot).filter((dir) => clearDir ? clearDir.includes(dir) : !ignore.includes(dir));
   return Promise.all(dirList.map((filePath) => {
     const dirPath = path.join(packageRoot, filePath);
     return new Promise((resolve, reject) => {
@@ -26,9 +26,9 @@ function clearPackage(packageRoot) {
   }));
 }
 
-exports.buildPackage = function buildPackage(rootOutDir, packagesConfig, namespace = '@fm/') {
+exports.buildPackage = function buildPackage(rootOutDir, packagesConfig, namespace = '@hwy-fm/') {
   const tasks = [];
-  const replaceRegexp = namespace == '@fm/' ? namespace : /@fm\/|@dynamic\//ig;
+  const replaceRegexp = namespace === '@hwy-fm/' ? namespace : /@hwy-fm\//ig;
   const packages = Object.keys(packagesConfig);
   const { config: { compilerOptions: { paths } } } = tsModel.readConfigFile(path.join(process.cwd(), 'tsconfig.json'), tsModel.sys.readFile);
   const tsPaths = {
@@ -38,7 +38,7 @@ exports.buildPackage = function buildPackage(rootOutDir, packagesConfig, namespa
 
   function buildTask([module, src, outDir, target = 'ESNext'], stripInternal) {
     return () => {
-      const project = ts.createProject('tsconfig.json', { module, target, paths: tsPaths });
+      const project = ts.createProject(outDir.indexOf('ts-tools') !== -1 ? 'ts-tools/tsconfig.json' : 'tsconfig.json', { module, target, paths: tsPaths });
       let source = gulp.src([`${src}/**/*`]).pipe(replace(replaceRegexp, namespace)).pipe(project());
       source = stripInternal ? source.dts : source.js;
       return source.pipe(gulp.dest(outDir));
@@ -47,11 +47,11 @@ exports.buildPackage = function buildPackage(rootOutDir, packagesConfig, namespa
 
   packages.forEach(packageName => {
     const packageRoot = path.join(rootOutDir, packageName);
-    const { buildName, ...others } = packagesConfig[packageName];
+    const { buildName, packageJson = true, ...others } = packagesConfig[packageName];
     const packageConfig = { ...others, buildName: buildName.replace(replaceRegexp, namespace) };
     const { src } = packageConfig;
 
-    tasks.push([`${packageName}-clear`, () => clearPackage(packageRoot)]);
+    tasks.push([`${packageName}-clear`, () => clearPackage(packageRoot, packageConfig)]);
     tasks.push([packageName, buildTask(['ESNext', src, packageRoot], true)]);
 
     Object.keys(builderMapping).forEach((moduleKey) => {
@@ -59,7 +59,9 @@ exports.buildPackage = function buildPackage(rootOutDir, packagesConfig, namespa
       tasks.push([`${packageName}-${moduleKey}`, buildTask([moduleKey, src, `${packageRoot}/${outDir}`, target])]);
     });
 
-    tasks.push([`${packageName}-package`, generatePackage(packageRoot, packageConfig)]);
+    if (packageJson) {
+      tasks.push([`${packageName}-package`, generatePackage(packageRoot, packageConfig)]);
+    }
   });
 
   return tasks;

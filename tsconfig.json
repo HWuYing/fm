@@ -17,9 +17,9 @@
     "declaration": true,
     "baseUrl": "./",
     "paths": {
-      "@fm/*": ["./university/*"],
-      "@dynamic/builder": ["./university/dynamic-builder"],
-      "@dynamic/plugin": ["./university/dynamic-plugin"]
+      "@hwy-fm/*": ["./university/*"],
+      "@hwy-fm/builder": ["./university/dynamic-builder"],
+      "@hwy-fm/plugin": ["./university/dynamic-plugin"]
     },
     "typeRoots": [
       "node_modules/@types",
@@ -30,6 +30,7 @@
   "compileOnSave": false,
   "include": [
     "./university/**/*",
+    "./tools/**/*",
     "./typings/**/*"
   ],
   "exclude": []
