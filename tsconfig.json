@@ -30,7 +30,6 @@
   "compileOnSave": false,
   "include": [
     "./university/**/*",
-    "./tools/**/*",
     "./typings/**/*"
   ],
   "exclude": []

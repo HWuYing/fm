@@ -38,7 +38,7 @@ function generateExports(pathList, exports = {}) {
   return exports;
 }
 
-function generatePackageTemplate(name, version, exports, dependencies = {}) {
+function generatePackageTemplate(name, version, exports, dependencies) {
   return {
     name,
     version,
@@ -48,18 +48,18 @@ function generatePackageTemplate(name, version, exports, dependencies = {}) {
     module: './esm5/index.js',
     es2015: './esm/index.js',
     exports,
-    dependencies,
     scripts: {
       test: 'echo \'Error: no test specified\' && exit 1'
     },
     author: '',
-    license: 'ISC'
+    license: 'ISC',
+    dependencies
   };
 }
 
 exports.generatePackage = function generatePackage(packageRoot, { buildName: name, version, dependencies, sideEffects = false } = {}) {
   return () => {
-    const exports = sideEffects ? {} : generateExports(readExportsPath(path.join(packageRoot, 'cjs')));
+    const exports = generateExports(sideEffects ? [] : readExportsPath(path.join(packageRoot, 'cjs')));
     const packageJson = generatePackageTemplate(name, version, exports, dependencies);
     if (!sideEffects) packageJson.sideEffects = ['*.effects.js'];
     if (!Object.keys(exports).length) delete packageJson.exports;

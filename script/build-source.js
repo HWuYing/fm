@@ -6,11 +6,11 @@ const tsModel = require('typescript');
 const replace = require('gulp-replace');
 const { generatePackage } = require('./generate-package');
 
-const builderMapping = {
-  ESNext: { outDir: 'esm5', target: 'es5' },
-  ES2015: { outDir: 'esm', target: 'es2015' },
-  CommonJs: { outDir: 'cjs', target: 'es5' }
-};
+const builderMapping = [
+  { outDir: 'esm5', target: 'es5', module: 'ESNext' },
+  { outDir: 'esm', target: 'es2015', module: 'ES2015' },
+  { outDir: 'cjs', target: 'es5', module: 'CommonJs' }
+];
 
 function clearPackage(packageRoot, packageConfig) {
   const { clearDir = [], ignore = ['.git'] } = packageConfig;
@@ -54,9 +54,8 @@ exports.buildPackage = function buildPackage(rootOutDir, packagesConfig, namespa
     tasks.push([`${packageName}-clear`, () => clearPackage(packageRoot, packageConfig)]);
     tasks.push([packageName, buildTask(['ESNext', src, packageRoot], true)]);
 
-    Object.keys(builderMapping).forEach((moduleKey) => {
-      const { outDir, target } = builderMapping[moduleKey];
-      tasks.push([`${packageName}-${moduleKey}`, buildTask([moduleKey, src, `${packageRoot}/${outDir}`, target])]);
+    builderMapping.forEach(({ outDir, target, module }) => {
+      tasks.push([`${packageName}-${module}`, buildTask([module, src, `${packageRoot}/${outDir}`, target])]);
     });
 
     if (packageJson) {
