@@ -3,9 +3,9 @@ const gulp = require('gulp');
 const { buildPackage } = require('./script/build-source');
 
 const namespace = '@hwy-fm/';
-const version = '0.0.1.beta.1';
+const version = '0.0.1-beta.2';
 const packagesConfig = {
-  di: { src: `university/di`, buildName: `${namespace}di`, version, dependencies: { 'reflect-metadata': '^0.2.2' } },
+  di: { src: `university/di`, buildName: `${namespace}di`, version, generateDep: true },
   core: { src: `university/core`, buildName: `${namespace}core`, version },
   csr: { src: `university/csr`, buildName: `${namespace}csr`, version },
   ssr: { src: `university/ssr`, buildName: `${namespace}ssr`, version },
