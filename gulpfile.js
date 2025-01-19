@@ -3,7 +3,7 @@ const gulp = require('gulp');
 const { buildPackage } = require('./script/build-source');
 
 const namespace = '@hwy-fm/';
-const version = '0.0.1-beta.2';
+const version = '0.0.1-beta.3';
 const packagesConfig = {
   di: { src: `university/di`, buildName: `${namespace}di`, version, generateDep: true },
   core: { src: `university/core`, buildName: `${namespace}core`, version },
@@ -36,7 +36,7 @@ function pushTask(_rootOutDir, _packagesConfig) {
 //   plugin: packagesConfig['dynamic-plugin']
 // });
 
-// pushTask(path.join(__dirname, '../api/node_modules/@hwy-fm/'), {
+// pushTask(path.join(__dirname, '../cyg/node_modules/@hwy-fm/'), {
 //   'ts-tools/dist': packagesConfig['ts-tools/dist']
 // });
 
